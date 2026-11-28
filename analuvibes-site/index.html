@@ -80,6 +80,7 @@ nav a:hover{border-color:var(--gold);color:var(--gold-d)}
 .who h2{font-size:clamp(22px,2.4vw,28px);font-weight:400;letter-spacing:.06em}
 .who h2 b{display:block;font-weight:500;font-size:clamp(48px,7vw,84px);letter-spacing:.03em;line-height:1}
 .who p{font-family:'Cinzel',serif;font-size:clamp(16px,1.7vw,19px);line-height:1.75;max-width:44em;margin:28px auto 0;color:#3B352F}
+.who p+p{margin-top:18px}
 .who .sign{width:150px;margin:30px auto 0}
 
 /* Catálogo */
@@ -95,8 +96,47 @@ nav a:hover{border-color:var(--gold);color:var(--gold-d)}
 .prod:hover{transform:translateY(-5px);box-shadow:0 18px 40px rgba(138,101,40,.14)}
 .prod[hidden]{display:none}
 .pimg{position:relative;aspect-ratio:4/5;background:var(--satin);overflow:hidden}
-.pimg img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
-.prod:hover .pimg img{transform:scale(1.04)}
+.pimg img{width:100%;height:100%;object-fit:cover}
+.pimg{cursor:pointer}
+
+/* Fotos que rolam pro lado */
+.slides{display:flex;height:100%;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain}
+.slides::-webkit-scrollbar{display:none}
+.slides img{flex:0 0 100%;width:100%;height:100%;object-fit:cover;scroll-snap-align:start;user-select:none;-webkit-user-drag:none}
+.sdots{position:absolute;bottom:12px;left:0;right:0;display:flex;justify-content:center;gap:6px;pointer-events:none}
+.sdots i{width:7px;height:7px;border-radius:4px;background:rgba(255,255,255,.65);box-shadow:0 0 0 1px rgba(60,50,40,.18);transition:width .25s}
+.sdots i.on{width:20px;background:#fff}
+.more{align-self:center;background:none;border:0;font:500 13px 'Cinzel',serif;letter-spacing:.06em;color:var(--gold-d);text-decoration:underline;text-underline-offset:5px;text-decoration-color:var(--gold-l);cursor:pointer;min-height:40px;padding:6px 10px}
+.more:hover{text-decoration-color:var(--gold)}
+
+/* Ficha da peça */
+dialog.sheet{border:0;padding:0;width:min(1000px,calc(100% - 32px));max-width:none;max-height:92vh;margin:auto;border-radius:14px;background:#fff;color:var(--ink);overflow:hidden;box-shadow:0 30px 80px rgba(42,38,34,.35)}
+dialog.sheet::backdrop{background:rgba(42,38,34,.55);backdrop-filter:blur(3px)}
+.sh{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);max-height:92vh}
+.sh-g{position:relative;background:var(--satin);aspect-ratio:4/5;max-height:92vh}
+.sh-i{padding:40px 36px 34px;overflow-y:auto;display:flex;flex-direction:column;gap:14px}
+.sh-i .badge{position:static;align-self:flex-start}
+.sh-i h3{font-size:clamp(24px,3vw,32px)}
+.sh-i .dots{justify-content:flex-start}
+.sh-i .price{font-size:26px}
+.sh-i h4{font:500 14px 'Cinzel',serif;letter-spacing:.08em;color:var(--gold-d);margin-top:8px;padding-top:14px;border-top:1px solid var(--line)}
+.sh-i p{color:#4A4540;font-size:18px;line-height:1.55}
+.sh-i ul{list-style:none}
+.sh-i li{padding:5px 0 5px 20px;position:relative;line-height:1.45;color:#4A4540;font-size:18px}
+.sh-i li::before{content:"";position:absolute;left:2px;top:14px;width:7px;height:7px;background:var(--g-gold);transform:rotate(45deg)}
+.sh-i .btn{margin-top:10px;width:100%}
+.x{position:absolute;top:12px;right:12px;z-index:3;width:44px;height:44px;border-radius:50%;border:1px solid var(--gold-l);background:rgba(255,255,255,.94);font-size:18px;color:var(--gold-d);cursor:pointer}
+.arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:2;width:42px;height:42px;border-radius:50%;border:1px solid var(--gold-l);background:rgba(255,255,255,.92);color:var(--gold-d);font-size:22px;line-height:1;cursor:pointer}
+.arrow.l{left:12px}.arrow.r{right:12px}
+.x:focus-visible,.arrow:focus-visible,.more:focus-visible{outline:2px solid var(--gold-d);outline-offset:2px}
+@media (max-width:760px){
+  dialog.sheet{width:100%;height:100%;max-height:100%;border-radius:0;overflow-y:auto}
+  .sh{grid-template-columns:1fr;max-height:none}
+  .sh-g{max-height:none}
+  .sh-i{padding:24px 20px 36px;overflow:visible}
+  .arrow{display:none}
+  .x{position:fixed}
+}
 .badge{position:absolute;top:12px;left:12px;background:rgba(255,255,255,.92);color:var(--gold-d);font:500 12px 'Cinzel',serif;letter-spacing:.08em;padding:6px 12px;border-radius:999px;border:1px solid var(--gold-l)}
 .new{left:auto;right:12px;background:var(--g-gold);color:#fff;border:0}
 .pbody{padding:20px 20px 22px;display:flex;flex-direction:column;gap:8px;flex:1;text-align:center}
@@ -154,7 +194,9 @@ footer a{color:var(--gold-d)}
   .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
   .pbody{padding:12px 8px 14px}
   .prod h3{font-size:14px}
-  .pdesc,details{display:none}
+  .pdesc{display:none}
+  .more{font-size:11px;min-height:36px;padding:4px}
+  .sdots{bottom:8px}
   .price{font-size:17px}
   .buy{font-size:11px;padding:8px 6px;letter-spacing:.04em}
   .buy svg{width:16px;height:16px}
@@ -165,7 +207,7 @@ footer a{color:var(--gold-d)}
 @media (prefers-reduced-motion:reduce){
   .logo{animation:none}
   html{scroll-behavior:auto}
-  .btn,.prod,.pimg img{transition:none}
+  .btn,.prod,.sdots i{transition:none}
 }
 </style>
 </head>
@@ -217,7 +259,8 @@ footer a{color:var(--gold-d)}
 <section class="band satin who center" id="quem-somos">
   <div class="wrap">
     <h2>Quem <b>Somos</b></h2>
-    <p>Nossa loja é um espaço dedicado a inspirar e empoderar mulheres, promovendo o cuidado com o bem-estar. Trabalhamos para oferecer peças que proporcionem conforto e estilo, ajudando cada cliente a sentir-se confiante e admirada ao se olhar no espelho. Nosso propósito é fazer com que as mulheres redescubram o prazer de amar seus próprios corpos, com roupas que realçam a beleza natural e acompanham suas jornadas de autocuidado e autoestima.</p>
+    <p>A Analu Vibes é um movimento. Existimos para inspirar mulheres a acreditarem em si mesmas, a se sentirem cada vez mais confiantes e bonitas, por dentro e por fora.</p>
+    <p>Criamos peças que trazem conforto para o dia a dia sem abrir mão do estilo: elegantes do treino ao café, do trabalho ao fim de semana, em qualquer ocasião. Vestir Analu Vibes é escolher cuidar de si, com leveza, autoestima e a sua melhor vibe.</p>
     <img class="sign" src="img/logo.png" alt="Analu Vibes">
   </div>
 </section>
@@ -271,6 +314,8 @@ footer a{color:var(--gold-d)}
   <p style="margin-top:10px;font-size:15px">© 2026 Analu Vibes</p>
 </footer>
 
+<dialog class="sheet" id="sheet" aria-label="Detalhes da peça"></dialog>
+
 <a class="float" href="https://wa.me/5521976804548?text=Oi!%20Vim%20pelo%20site%20da%20Analu%20Vibes." target="_blank" rel="noopener" aria-label="Falar no WhatsApp" style="color:#fff"><svg><use href="#ico-wa"/></svg></a>
 
 <script>
@@ -280,8 +325,10 @@ footer a{color:var(--gold-d)}
      COLECOES: chave e nome de cada coleção (vira um botão de filtro).
      PRODUTOS: uma linha por peça:
        nome, colecao (a chave em COLECOES), preco ('R$ 249,99' ou null para "Consultar"),
-       img (arquivo na pasta img/), cores (lista em hexadecimal), desc, det (detalhes),
-       novo: true mostra o selo "Novidade".
+       fotos (lista de arquivos da pasta img/, a 1ª é a capa; com 2 ou mais, rolam pro lado),
+       cores (lista em hexadecimal), desc (frase curta do card),
+       sobre (texto completo da peça, igual ao do WhatsApp; \n\n separa parágrafos),
+       det (detalhes em tópicos), novo: true mostra o selo "Novidade".
      ============================================ */
   const WHATSAPP = '5521976804548';
   const COLECOES = { energy:'Energy', endorfina:'Endorfina', aura:'Aura', 'flare-boss':'Flare Boss', tropical:'Tropical' };
@@ -290,17 +337,17 @@ footer a{color:var(--gold-d)}
   const DET_AURA = ['Forro duplo na frente, que comprime e marca a cintura','Zero transparência','Costas com recorte e alças assimétricas','Modelagem flare, elegante dentro e fora da academia'];
   const DET_FLARE = ['Calça flare de cintura alta com fenda na barra, que alonga a silhueta','Cós que pode ser dobrado','Bordado dourado com a logo no cós','Top de alças finas com recorte que valoriza as costas','90% poliamida tecnológica exclusiva, 10% elastano','Tamanho único, veste do 34 ao 42'];
   const PRODUTOS = [
-    { nome:'Macacão Aura', colecao:'aura', preco:'R$ 279,99', img:'img/aura.jpg', cores:['#F1EBDD'], desc:'A peça que dá nome à coleção. Do pilates à cafeteria.', det:DET_AURA },
-    { nome:'Macacão Aura Black', colecao:'aura', preco:'R$ 279,99', img:'img/aura-black.jpg', cores:['#1b1b1b'], desc:'Do pilates à cafeteria e aos compromissos do dia.', det:DET_AURA },
-    { nome:'Conjunto Flare Boss Azul Céu', colecao:'flare-boss', preco:'R$ 289,99', img:'img/flare-azul-ceu.jpg', cores:['#7DB8EC'], desc:'Do treino ao almoço, sem trocar de roupa.', det:DET_FLARE },
-    { nome:'Conjunto Flare Boss Off', colecao:'flare-boss', preco:'R$ 289,99', img:'img/flare-off.jpg', cores:['#EFE6DA'], desc:'Do treino ao almoço, sem trocar de roupa.', det:DET_FLARE },
-    { nome:'Conjunto Flare Boss Canela', colecao:'flare-boss', preco:'R$ 289,99', img:'img/flare-canela.jpg', cores:['#A8452B'], desc:'Do treino ao almoço, sem trocar de roupa.', det:DET_FLARE },
-    { nome:'Conjunto Flare Boss Black', colecao:'flare-boss', preco:'R$ 289,99', img:'img/flare-black.jpg', cores:['#1b1b1b'], desc:'Do treino ao almoço, sem trocar de roupa.', det:DET_FLARE },
-    { nome:'Macaquinho Energy Off', colecao:'energy', preco:'R$ 249,99', img:'img/energy-off.jpg', cores:['#EFE9DC'], desc:'Feito pra corrida, pro treino e pra tudo o que vier depois.', det:DET_ENERGY },
-    { nome:'Macaquinho Energy Black', colecao:'energy', preco:'R$ 249,99', img:'img/energy-black.jpg', cores:['#1b1b1b'], desc:'Feito pra corrida, pro treino e pra tudo o que vier depois.', det:DET_ENERGY },
-    { nome:'Conjunto Short Endorfina', colecao:'endorfina', preco:'R$ 229,90', img:'img/endorfina.jpg', cores:['#B9BCC2'], desc:'A sensação depois do treino, em forma de conjunto.', det:DET_ENDORFINA },
-    { nome:'Conjunto Short Endorfina Black', colecao:'endorfina', preco:'R$ 229,90', img:'img/endorfina-black.jpg', cores:['#1b1b1b'], desc:'A sensação depois do treino, em forma de conjunto.', det:DET_ENDORFINA },
-    { nome:'Macaquinho Tropical', colecao:'tropical', preco:null, img:'img/tropical.jpg', cores:['#F7C6D6','#5B8EE0','#3FD6CF','#1b1b1b'], desc:'Cores: rosa bebê, azul, verde água e preto.', det:['91% poliamida e 9% elastano','Amarração lateral na barra do short'] }
+    { nome:'Macacão Aura', colecao:'aura', preco:'R$ 279,99', fotos:['img/aura.jpg'], cores:['#F1EBDD'], desc:'A peça que dá nome à coleção. Do pilates à cafeteria.', det:DET_AURA },
+    { nome:'Macacão Aura Black', colecao:'aura', preco:'R$ 279,99', fotos:['img/aura-black.jpg'], cores:['#1b1b1b'], desc:'Do pilates à cafeteria e aos compromissos do dia.', det:DET_AURA },
+    { nome:'Conjunto Flare Boss Azul Céu', colecao:'flare-boss', preco:'R$ 289,99', fotos:['img/flare-azul-ceu.jpg'], cores:['#7DB8EC'], desc:'Do treino ao almoço, sem trocar de roupa.', det:DET_FLARE },
+    { nome:'Conjunto Flare Boss Off', colecao:'flare-boss', preco:'R$ 289,99', fotos:['img/flare-off.jpg'], cores:['#EFE6DA'], desc:'Do treino ao almoço, sem trocar de roupa.', det:DET_FLARE },
+    { nome:'Conjunto Flare Boss Canela', colecao:'flare-boss', preco:'R$ 289,99', fotos:['img/flare-canela.jpg'], cores:['#A8452B'], desc:'Do treino ao almoço, sem trocar de roupa.', det:DET_FLARE },
+    { nome:'Conjunto Flare Boss Black', colecao:'flare-boss', preco:'R$ 289,99', fotos:['img/flare-black.jpg'], cores:['#1b1b1b'], desc:'Do treino ao almoço, sem trocar de roupa.', det:DET_FLARE },
+    { nome:'Macaquinho Energy Off', colecao:'energy', preco:'R$ 249,99', fotos:['img/energy-off.jpg'], cores:['#EFE9DC'], desc:'Feito pra corrida, pro treino e pra tudo o que vier depois.', det:DET_ENERGY },
+    { nome:'Macaquinho Energy Black', colecao:'energy', preco:'R$ 249,99', fotos:['img/energy-black.jpg'], cores:['#1b1b1b'], desc:'Feito pra corrida, pro treino e pra tudo o que vier depois.', det:DET_ENERGY },
+    { nome:'Conjunto Short Endorfina', colecao:'endorfina', preco:'R$ 229,90', fotos:['img/endorfina.jpg'], cores:['#B9BCC2'], desc:'A sensação depois do treino, em forma de conjunto.', det:DET_ENDORFINA },
+    { nome:'Conjunto Short Endorfina Black', colecao:'endorfina', preco:'R$ 229,90', fotos:['img/endorfina-black.jpg'], cores:['#1b1b1b'], desc:'A sensação depois do treino, em forma de conjunto.', det:DET_ENDORFINA },
+    { nome:'Macaquinho Tropical', colecao:'tropical', preco:null, fotos:['img/tropical.jpg'], cores:['#F7C6D6','#5B8EE0','#3FD6CF','#1b1b1b'], desc:'Cores: rosa bebê, azul, verde água e preto.', det:['91% poliamida e 9% elastano','Amarração lateral na barra do short'] }
   ];
   /* =============== FIM DA ÁREA DE EDIÇÃO =============== */
 
@@ -311,21 +358,72 @@ footer a{color:var(--gold-d)}
   filtros.innerHTML = `<button class="chip on" data-f="todas">Todas</button>` +
     Object.entries(COLECOES).map(([k,n]) => `<button class="chip" data-f="${esc(k)}">${esc(n)}</button>`).join('');
 
+  const fotosDe = p => (p.fotos && p.fotos.length ? p.fotos : [p.img]).filter(Boolean);
+  const slides = (p, lazy) => {
+    const f = fotosDe(p);
+    return `<div class="slides">${f.map((src,i) => `<img src="${esc(src)}" alt="${esc(p.nome)}${f.length > 1 ? `, foto ${i+1} de ${f.length}` : ''}"${lazy ? ' loading="lazy"' : ''} draggable="false">`).join('')}</div>` +
+      (f.length > 1 ? `<div class="sdots">${f.map((_,i) => `<i class="${i ? '' : 'on'}"></i>`).join('')}</div>` : '');
+  };
+  const ligaSlides = root => root.querySelectorAll('.slides').forEach(s => {
+    const d = s.parentElement.querySelectorAll('.sdots i'); if (!d.length) return;
+    s.addEventListener('scroll', () => {
+      const k = Math.round(s.scrollLeft / s.clientWidth);
+      d.forEach((x,i) => x.classList.toggle('on', i === k));
+    }, {passive:true});
+  });
+  const preco = p => p.preco ? esc(p.preco) : '<small>Preço</small>Consultar';
+  const btnCompra = p => `<a class="btn gold buy" href="${linkCompra(p)}" target="_blank" rel="noopener"><svg><use href="#ico-wa"/></svg>${p.preco ? 'Comprar' : 'Consultar'}</a>`;
+  const bolinhas = p => `<div class="dots">${(p.cores||[]).map(x => `<i style="background:${esc(x)}"></i>`).join('')}</div>`;
+
   const grid = document.getElementById('grid');
-  grid.innerHTML = PRODUTOS.map(p => `
+  grid.innerHTML = PRODUTOS.map((p,i) => `
     <article class="prod" data-col="${esc(p.colecao)}">
-      <div class="pimg"><img src="${esc(p.img)}" alt="${esc(p.nome)}" loading="lazy"><span class="badge">${esc(COLECOES[p.colecao] || p.colecao)}</span>${p.novo ? '<span class="badge new">Novidade</span>' : ''}</div>
+      <div class="pimg" data-i="${i}">${slides(p, true)}<span class="badge">${esc(COLECOES[p.colecao] || p.colecao)}</span>${p.novo ? '<span class="badge new">Novidade</span>' : ''}</div>
       <div class="pbody">
         <h3>${esc(p.nome)}</h3>
-        <div class="dots">${(p.cores||[]).map(x => `<i style="background:${esc(x)}"></i>`).join('')}</div>
+        ${bolinhas(p)}
         <p class="pdesc">${esc(p.desc||'')}</p>
-        ${p.det && p.det.length ? `<details><summary>Detalhes da peça</summary><ul>${p.det.map(d => `<li>${esc(d)}</li>`).join('')}</ul></details>` : ''}
+        <button class="more" type="button" data-i="${i}">Sobre a peça</button>
         <div class="pfoot">
-          <span class="price">${p.preco ? esc(p.preco) : '<small>Preço</small>Consultar'}</span>
-          <a class="btn gold buy" href="${linkCompra(p)}" target="_blank" rel="noopener"><svg><use href="#ico-wa"/></svg>${p.preco ? 'Comprar' : 'Consultar'}</a>
+          <span class="price">${preco(p)}</span>
+          ${btnCompra(p)}
         </div>
       </div>
     </article>`).join('');
+  ligaSlides(grid);
+
+  /* Ficha da peça: fotos grandes, texto completo e detalhes */
+  const sheet = document.getElementById('sheet');
+  const abrir = i => {
+    const p = PRODUTOS[i], n = fotosDe(p).length;
+    const sobre = String(p.sobre || p.desc || '').split(/\n\s*\n/).filter(Boolean);
+    sheet.innerHTML = `<div class="sh">
+      <div class="sh-g">${slides(p, false)}${n > 1 ? '<button class="arrow l" type="button" aria-label="Foto anterior">‹</button><button class="arrow r" type="button" aria-label="Próxima foto">›</button>' : ''}</div>
+      <div class="sh-i">
+        <span class="badge">${esc(COLECOES[p.colecao] || p.colecao)}</span>
+        <h3>${esc(p.nome)}</h3>
+        ${bolinhas(p)}
+        <span class="price">${preco(p)}</span>
+        ${sobre.length ? `<h4>Sobre a peça</h4>${sobre.map(t => `<p>${esc(t)}</p>`).join('')}` : ''}
+        ${p.det && p.det.length ? `<h4>Detalhes</h4><ul>${p.det.map(d => `<li>${esc(d)}</li>`).join('')}</ul>` : ''}
+        ${btnCompra(p)}
+      </div>
+    </div><button class="x" type="button" aria-label="Fechar">✕</button>`;
+    ligaSlides(sheet);
+    document.body.style.overflow = 'hidden';
+    sheet.showModal();
+    sheet.scrollTop = 0;
+  };
+  grid.addEventListener('click', e => {
+    const t = e.target.closest('.pimg,.more'); if (t) abrir(+t.dataset.i);
+  });
+  sheet.addEventListener('click', e => {
+    if (e.target === sheet || e.target.closest('.x')) return sheet.close();
+    const a = e.target.closest('.arrow'); if (!a) return;
+    const s = sheet.querySelector('.slides');
+    s.scrollBy({left: (a.classList.contains('r') ? 1 : -1) * s.clientWidth, behavior:'smooth'});
+  });
+  sheet.addEventListener('close', () => { document.body.style.overflow = ''; });
 
   const empty = document.getElementById('empty');
   filtros.addEventListener('click', e => {

@@ -54,7 +54,7 @@ Depois de cada pedido, abra o link e confira. Se algo não ficou do seu jeito, �
 
 - Use foto em pé, na **vertical**. O site mostra as fotos no formato de retrato (4:5).
 - Fundo claro, luz do dia, a peça inteira aparecendo.
-- Uma foto por cor da peça. Cada cor vira um card com o próprio botão de compra.
+- Cada cor vira um card com o próprio botão de compra. Mande de 4 a 6 fotos por cor (frente, costas, lado e um detalhe): elas rolam pro lado no site.
 - Dê nomes simples pros arquivos, sem acento: `sol-rosa.jpg`, `aura-verde.jpg`.
 
 ## Para o Claude (se ele perguntar onde mexer)
@@ -63,6 +63,7 @@ Todas as peças ficam no `index.html`, dentro do bloco marcado **EDITE AQUI**, n
 
 - `WHATSAPP`: o número que recebe os pedidos.
 - `COLECOES`: o nome de cada coleção (vira um botão de filtro).
-- `PRODUTOS`: uma linha por peça, com `nome`, `colecao`, `preco`, `img`, `cores`, `desc`, `det` e `novo: true` para o selo de Novidade.
+- `PRODUTOS`: uma linha por peça, com `nome`, `colecao`, `preco`, `fotos` (lista; a 1ª é a capa e, com 2 ou mais, as fotos rolam pro lado no card e na ficha), `cores`, `desc` (frase curta do card), `sobre` (texto completo da peça, igual ao do catálogo do WhatsApp; `\n\n` separa parágrafos), `det` e `novo: true` para o selo de Novidade.
+- Tocar na foto ou em "Sobre a peça" abre a ficha da peça, com fotos grandes, o texto `sobre` e os detalhes.
 
 As fotos ficam na pasta `img/`, e a logo está em `img/logo.png`, `img/logo-sol.png` e `img/logo-nome.png`. Mantenha o visual em branco, dourado e prata, com a fonte Cinzel. Depois de editar, ele publica a nova versão no mesmo artifact. Assim o link continua igual e quem já tem o link vê o site atualizado.
